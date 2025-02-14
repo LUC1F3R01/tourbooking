@@ -1,0 +1,70 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <img src="{% static 'assets/img/packages/white-logo.png' %}" class="navbar-brand logo" style="max-width:80px;
+    width: auto; display:block">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item {% block activeHome %}{% endblock activeHome%}">
+                <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item {% block activeEvent %}{% endblock activeEvent %}">
+                <a class="nav-link" href="/events">Events</a>
+            </li>            
+            <li class="nav-item ">
+                <a class="nav-link" href="/about-us">About Us</a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="/contact-1">Contact Us</a>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown2" role="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {% if user.is_authenticated and request.user.is_superuser%}
+                    you are admin
+                    {% elif user.is_authenticated%}
+                    {{user.email}}
+                    {% else %} 
+                    User
+                    {% endif %}</a>
+
+                <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-macos mx-0 border-0 shadow">
+                    {% if user.is_authenticated and request.user.is_superuser%}
+                    <li><a class="dropdown-item " href="/login">Login</a></li>
+                    <li><a class="dropdown-item" href="/signup">SignUp</a></li>
+
+                    {% elif user.is_authenticated %}
+                    <li><a class="dropdown-item " href="/user-profile">Profile</a></li>
+                    <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                    <li><a class="dropdown-item " href="/mypackage">My Packages</a></li>
+                    {% else %}
+                    <li><a class="dropdown-item " href="/login">Login</a></li>
+                    <li><a class="dropdown-item" href="/signup">SignUp</a></li>
+
+                    {% endif %}
+            
+                    {% comment %} {% if request.user.is_superuser%}
+                    no you are admin
+                    {% else %}
+                    {{user.email}}
+                    {% endif%}
+
+                    <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-macos mx-0 border-0 shadow">
+                        {% if user.is_authenticated %}
+                        <li><a class="dropdown-item " href="/user-profile">Profile</a></li>
+                        <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                        <li><a class="dropdown-item " href="/mypackage">My Packages</a></li>
+                        {% else %}
+                        <li><a class="dropdown-item " href="/login">Login</a></li>
+                        <li><a class="dropdown-item" href="/signup">SignUp</a></li> {% endcomment %}
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+</nav>
